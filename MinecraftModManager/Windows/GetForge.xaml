@@ -1,0 +1,36 @@
+﻿<Window x:Class="MinecraftModManager.Windows.GetForge"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MinecraftModManager.Windows"
+        mc:Ignorable="d"
+        Title="GetForge"
+        Height="400"
+        Width="400"
+        ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Installed Minecraft Versions (Without Forge)"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Margin="8"
+                   Grid.Row="0"
+                   TextWrapping="WrapWithOverflow" />
+        <ListView Grid.Row="1"
+                  Margin="8"
+                  x:Name="Lst_InstalledVersions"
+                  SelectionMode="Single" />
+        <Button Content="Get Forge"
+                x:Name="Btn_GetForge"
+                Click="Btn_GetForge_Click"
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Padding="4" />
+    </Grid>
+</Window>

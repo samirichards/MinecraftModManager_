@@ -1,0 +1,17 @@
+[
+	{
+		"modid": "wrcbe",
+		"name": "WirelessRedstone-CBE",
+		"description": "Wireless Redstone ChickenBones Edition",
+		"version": "2.3.1.30",
+		"mcversion": "1.12.2",
+		"url": "http://chickenbones.net/pages/Links.html",
+		"authorList": [
+			"ChickenBones"
+		],
+		"dependencies": [
+			"codechickenlib",
+			"forgemultipartcbe"
+		]
+	}
+]
