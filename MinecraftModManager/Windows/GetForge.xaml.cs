@@ -45,12 +45,26 @@ namespace MinecraftModManager.Windows
 			try
 			{
 				Process.Start("https://files.minecraftforge.net/maven/net/minecraftforge/forge/index_" + Lst_InstalledVersions.SelectedItem.ToString() + ".html");
-				this.DialogResult = true;
+				DialogResult = true;
 			}
 			catch (Exception)
 			{
 				Process.Start("https://files.minecraftforge.net/");
-				this.DialogResult = true;
+				DialogResult = true;
+			}
+		}
+
+		private void Lst_InstalledVersions_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			try
+			{
+				Process.Start("https://files.minecraftforge.net/maven/net/minecraftforge/forge/index_" + Lst_InstalledVersions.SelectedItem.ToString() + ".html");
+				DialogResult = true;
+			}
+			catch (Exception)
+			{
+				Process.Start("https://files.minecraftforge.net/");
+				DialogResult = true;
 			}
 		}
 	}

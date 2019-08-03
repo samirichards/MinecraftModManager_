@@ -24,7 +24,8 @@
         <ListView Grid.Row="1"
                   Margin="8"
                   x:Name="Lst_InstalledVersions"
-                  SelectionMode="Single" />
+                  SelectionMode="Single"
+                  MouseDoubleClick="Lst_InstalledVersions_MouseDoubleClick"/>
         <Button Content="Get Forge"
                 x:Name="Btn_GetForge"
                 Click="Btn_GetForge_Click"
