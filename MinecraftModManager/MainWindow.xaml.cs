@@ -88,33 +88,41 @@ namespace MinecraftModManager
 
 		public async void RefreshAsync(string _minecraftDir)
 		{
-			Btn_ManualRefresh.IsEnabled = false;
-			Lbl_InstalledMods.Content = "Fetching Mods...";
-			Prog_ProgBar.IsEnabled = true;
-			Prog_ProgBar.Visibility = Visibility.Visible;
-			{
-				try
-				{
-					string minecraftModsDir = _minecraftDir.ToString() + "\\mods";
+            if (Directory.Exists(MinecraftDir))
+            {
+                Btn_ManualRefresh.IsEnabled = false;
+                Lbl_InstalledMods.Content = "Fetching Mods...";
+                Prog_ProgBar.IsEnabled = true;
+                Prog_ProgBar.Visibility = Visibility.Visible;
+                {
+                    try
+                    {
+                        string minecraftModsDir = _minecraftDir.ToString() + "\\mods";
 
-					Task<List<Classes.Mod>> mods = GetModListAsync(minecraftModsDir);
-					List<Classes.Mod> results = await mods;
+                        Task<List<Classes.Mod>> mods = GetModListAsync(minecraftModsDir);
+                        List<Classes.Mod> results = await mods;
 
-					LoadedMods = results;
-					Lst_ModList.ItemsSource = LoadedMods;
-					Lst_ModList.DataContext = LoadedMods;
-					Lbl_InstalledMods.Content = "Installed Mods: " + LoadedMods.Count;
-					DataContext = this;
-				}
-				catch (Exception a)
-				{
-					System.Windows.MessageBox.Show("There was a problem loading mods from the directory: " + _minecraftDir + Environment.NewLine + "Exception Details: " + Environment.NewLine + a.Message);
-				}
-			}
-			Btn_ManualRefresh.IsEnabled = true;
-			Prog_ProgBar.IsEnabled = false;
-			Prog_ProgBar.Visibility = Visibility.Hidden;
-			GC.Collect(4);
+                        LoadedMods = results;
+                        Lst_ModList.ItemsSource = LoadedMods;
+                        Lst_ModList.DataContext = LoadedMods;
+                        Lbl_InstalledMods.Content = "Installed Mods: " + LoadedMods.Count;
+                        DataContext = this;
+                    }
+                    catch (Exception a)
+                    {
+                        System.Windows.MessageBox.Show("There was a problem loading mods from the directory: " + _minecraftDir + Environment.NewLine + "Exception Details: " + Environment.NewLine + a.Message);
+                    }
+                }
+                Btn_ManualRefresh.IsEnabled = true;
+                Prog_ProgBar.IsEnabled = false;
+                Prog_ProgBar.Visibility = Visibility.Hidden;
+                GC.Collect(4);
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Could not find Minecraft in the directory '" + MinecraftDir + "'");
+            }
+			
 		}
 
 		public async Task<List<Classes.Mod>> GetModListAsync(string minecraftModsDir)
@@ -189,8 +197,15 @@ namespace MinecraftModManager
 
 		private void Menu_OpenSelDir_Click(object sender, RoutedEventArgs e)
 		{
-			Process.Start(MinecraftDir);
-		}
+            try
+            {
+                Process.Start(MinecraftDir);
+            }
+            catch (Exception b)
+            {
+                System.Windows.Forms.MessageBox.Show("Could not open the selected minecraft directory" + Environment.NewLine + "Reason: " + b.Message);
+            }
+        }
 
 		private void Menu_Settings_Click(object sender, RoutedEventArgs e)
 		{
@@ -199,7 +214,11 @@ namespace MinecraftModManager
 
 		private void Txt_SearchMods_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
 		{
-			Lst_ModList.ItemsSource = LoadedMods.Where(a => a.name.ToLower().Contains(Txt_SearchMods.Text.ToLower()));
+            try
+            {
+                Lst_ModList.ItemsSource = LoadedMods.Where(a => a.name.ToLower().Contains(Txt_SearchMods.Text.ToLower()));
+            }
+            catch (Exception) { };
 		}
 
 		private void Btn_ClearSeach_Click(object sender, RoutedEventArgs e)

@@ -34,8 +34,16 @@ namespace MinecraftModManager.Windows
 			{
 				Dispatcher.Invoke(() => 
 				{
-					Regex regex = new Regex("^\\d+(\\.\\d+)*$");
-					Lst_InstalledVersions.ItemsSource = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft\\versions").Where(a => regex.IsMatch(System.IO.Path.GetFileName(a))).Select(b=> System.IO.Path.GetFileName(b)).OrderBy(a=> double.Parse(a.Substring(a.IndexOf(".") + 1, a.Length - (a.IndexOf(".") + 1))));
+                    try
+                    {
+                        Regex regex = new Regex("^\\d+(\\.\\d+)*$");
+                        Lst_InstalledVersions.ItemsSource = Directory.GetDirectories(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft\\versions").Where(a => regex.IsMatch(System.IO.Path.GetFileName(a))).Select(b => System.IO.Path.GetFileName(b)).OrderBy(a => double.Parse(a.Substring(a.IndexOf(".") + 1, a.Length - (a.IndexOf(".") + 1))));
+                    }
+                    catch (Exception c)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Could not get installed minecraft versions" + Environment.NewLine + "Reason: " + c.Message);
+                        this.Close();
+                    }	
 				});
 			});
 		}
