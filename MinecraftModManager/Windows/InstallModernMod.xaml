@@ -6,9 +6,38 @@
         xmlns:local="clr-namespace:MinecraftModManager.Windows"
         mc:Ignorable="d"
         Title="Install Modern Mod"
-        Height="500" Width="400"
+        Height="500"
+        Width="400"
         ResizeMode="CanMinimize">
     <Grid>
-        
+        <Image Source="{Binding logo}"
+               Grid.Row="0"
+               Margin="0,0,0,24"
+               Height="200"
+               VerticalAlignment="Top">
+            <Image.OpacityMask>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <GradientStop Color="Transparent"
+                                  Offset="0.853" />
+                    <GradientStop Color="#7FFFFFFF"
+                                  Offset="0.16" />
+                </LinearGradientBrush>
+            </Image.OpacityMask>
+        </Image>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <Label Content="{Binding name}"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Center"
+                   Grid.Row="0"
+                   FontSize="16"
+                   FontWeight="Bold" />
+            <TextBlock Text="{Binding description}"
+                       Grid.Row="1"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"
+                       TextWrapping="WrapWithOverflow" />
+        </StackPanel>
     </Grid>
 </Window>

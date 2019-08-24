@@ -76,7 +76,8 @@
                     <TextBox VerticalContentAlignment="Center"
                              x:Name="Txt_SearchMods"
                              KeyUp="Txt_SearchMods_KeyUp"
-                             Text="Search" />
+                             Text="Search"
+                             Margin="0,0,24,0"/>
                     <Button Padding="6,4"
                             x:Name="Btn_ClearSeach"
                             Click="Btn_ClearSeach_Click"
