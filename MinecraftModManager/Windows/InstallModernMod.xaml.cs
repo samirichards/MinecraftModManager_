@@ -27,7 +27,6 @@ namespace MinecraftModManager.Windows
 		{
 			InitializeComponent();
 			ModFilePath = _modFilePath;
-
             try
             {
                 if (File.Exists("temp"))
@@ -79,12 +78,10 @@ namespace MinecraftModManager.Windows
                 catch (Exception)
                 {
                 }
-
                 this.DataContext = temp;
             }
             catch
             {
-
             }
         }
 	}

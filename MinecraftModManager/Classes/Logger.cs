@@ -37,7 +37,6 @@ namespace MinecraftModManager.Classes
 
             if (Disposing)
             {
-
                 handle.Dispose();
             }
             Disposed = true;

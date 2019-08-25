@@ -6,9 +6,7 @@
         xmlns:local="clr-namespace:MinecraftModManager"
         xmlns:classes="clr-namespace:MinecraftModManager.Classes"
         mc:Ignorable="d"
-        Title="MainWindow"
-        Height="800"
-        Width="1000">
+        Title="MainWindow">
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">

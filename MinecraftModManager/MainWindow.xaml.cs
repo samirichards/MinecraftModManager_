@@ -23,56 +23,56 @@ using Application = System.Windows.Application;
 
 namespace MinecraftModManager
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
-	{
-		public string MinecraftDir { get; set; }
-		public List<Classes.Mod> LoadedMods { get; set; }
-		public MainWindow()
-		{
-			InitializeComponent();
-			MinecraftDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft";
-			RefreshAsync(MinecraftDir);
-		}
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public string MinecraftDir { get; set; }
+        public List<Classes.Mod> LoadedMods { get; set; }
+        public MainWindow()
+        {
+            InitializeComponent();
+            MinecraftDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\.minecraft";
+            RefreshAsync(MinecraftDir);
+        }
 
-		private void Menu_SelNewDirectory_Click(object sender, RoutedEventArgs e)
-		{
-			SelectNewDirectory();
-		}
+        private void Menu_SelNewDirectory_Click(object sender, RoutedEventArgs e)
+        {
+            SelectNewDirectory();
+        }
 
-		private void SelectNewDirectory()
-		{
-			using (var fbd = new FolderBrowserDialog())
-			{
-				DialogResult result = fbd.ShowDialog();
-				try
-				{
-					if (!Directory.GetDirectories(fbd.SelectedPath).Select(a => new DirectoryInfo(a).Name).Contains("mods"))
-					{
-						System.Windows.MessageBox.Show("Invalid Minecraft Directory" + Environment.NewLine + "Mods folder not found" + Environment.NewLine + "If this a real Minecraft directory then forge is likely not installed");
-					}
-					else
-					{
-						MinecraftDir = fbd.SelectedPath;
-						RefreshAsync(MinecraftDir);
-					}
-				}
-				catch (Exception e)
-				{
-					System.Windows.MessageBox.Show("Unexpected Error" + Environment.NewLine + e.Message);
-				}
-			}
-		}
+        private void SelectNewDirectory()
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+                try
+                {
+                    if (!Directory.GetDirectories(fbd.SelectedPath).Select(a => new DirectoryInfo(a).Name).Contains("mods"))
+                    {
+                        System.Windows.MessageBox.Show("Invalid Minecraft Directory" + Environment.NewLine + "Mods folder not found" + Environment.NewLine + "If this a real Minecraft directory then forge is likely not installed");
+                    }
+                    else
+                    {
+                        MinecraftDir = fbd.SelectedPath;
+                        RefreshAsync(MinecraftDir);
+                    }
+                }
+                catch (Exception e)
+                {
+                    System.Windows.MessageBox.Show("Unexpected Error" + Environment.NewLine + e.Message);
+                }
+            }
+        }
 
-		private void Btn_ManualRefresh_Click(object sender, RoutedEventArgs e)
-		{
-			RefreshAsync(MinecraftDir);
-		}
+        private void Btn_ManualRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshAsync(MinecraftDir);
+        }
 
-		public async void RefreshAsync(string _minecraftDir)
-		{
+        public async void RefreshAsync(string _minecraftDir)
+        {
             if (Directory.Exists(MinecraftDir))
             {
                 Btn_ManualRefresh.IsEnabled = false;
@@ -107,81 +107,83 @@ namespace MinecraftModManager
             {
                 System.Windows.Forms.MessageBox.Show("Could not find Minecraft in the directory '" + MinecraftDir + "'");
             }
-			
-		}
+        }
 
-		public async Task<List<Classes.Mod>> GetModListAsync(string minecraftModsDir)
-		{
-			return await Task.Run(() =>
-			{
+        public async Task<List<Classes.Mod>> GetModListAsync(string minecraftModsDir)
+        {
+            return await Task.Run(() =>
+            {
+                List<Classes.Mod> mods = new List<Classes.Mod>();
+                foreach (var item in Directory.GetFiles(minecraftModsDir))
+                {
+                    try
+                    {
+                        if (File.Exists("temp"))
+                        {
+                            File.Delete("temp");
+                        }
+                        using (var zipfile = ZipFile.Open(item, ZipArchiveMode.Read))
+                        {
+                            zipfile.Entries.Where(f => f.Name == "mcmod.info").First().ExtractToFile("temp");
+                        }
+                        Classes.Mod temp = Classes.Utilities.GetModFromJson(File.ReadAllText("temp"));
+                        foreach (PropertyInfo propertyInfo in temp.GetType().GetProperties().Where(a => a.PropertyType == typeof(string)))
+                        {
+                            try
+                            {
+                                if (propertyInfo.GetValue(temp).ToString() == string.Empty)
+                                {
+                                    propertyInfo.SetValue(temp, null);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
 
-				List<Classes.Mod> mods = new List<Classes.Mod>();
+                        try
+                        {
+                            if (temp.logoFile != null)
+                            {
+                                System.Drawing.Image image = null;
+                                using (var zipfile = ZipFile.Open(item, ZipArchiveMode.Read))
+                                {
+                                    image = System.Drawing.Image.FromStream(zipfile.Entries.Where(f => f.Name.Contains(System.IO.Path.GetFileName(temp.logoFile))).First().Open());
+                                }
+                                MemoryStream ms = new MemoryStream();
+                                image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                BitmapImage bImg = new BitmapImage();
+                                bImg.BeginInit();
+                                bImg.StreamSource = new MemoryStream(ms.ToArray());
+                                bImg.EndInit();
+                                bImg.Freeze();
+                                Dispatcher.Invoke(() => temp.logo = bImg);
+                            }
+                            else
+                            {
+                                Dispatcher.Invoke(() => temp.logo = new BitmapImage(new Uri("/Assets/default.png", UriKind.Relative)));
+                            }
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        mods.Add(temp);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+                return mods;
+            });
+        }
 
-				foreach (var item in Directory.GetFiles(minecraftModsDir))
-				{
-					try
-					{
-						if (File.Exists("temp"))
-						{
-							File.Delete("temp");
-						}
-						ZipFile.Open(item, ZipArchiveMode.Read).Entries.Where(f => f.Name == "mcmod.info").First().ExtractToFile("temp");
-						Classes.Mod temp = Classes.Utilities.GetModFromJson(File.ReadAllText("temp"));
-						foreach (PropertyInfo propertyInfo in temp.GetType().GetProperties().Where(a => a.PropertyType == typeof(string)))
-						{
-							try
-							{
-								if (propertyInfo.GetValue(temp).ToString() == string.Empty)
-								{
-									propertyInfo.SetValue(temp, null);
-								}
-							}
-							catch (Exception)
-							{
-							}
-						}
+        private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            ((Image)sender).Source = new BitmapImage(new Uri("/Assets/default.png", UriKind.Relative));
+        }
 
-						try
-						{
-							if (temp.logoFile != null)
-							{
-								System.Drawing.Image image = System.Drawing.Image.FromStream(ZipFile.Open(item, ZipArchiveMode.Read).Entries.Where(f => f.Name.Contains(System.IO.Path.GetFileName(temp.logoFile))).First().Open());
-								MemoryStream ms = new MemoryStream();
-								image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-								BitmapImage bImg = new BitmapImage();
-								bImg.BeginInit();
-								bImg.StreamSource = new MemoryStream(ms.ToArray());
-								bImg.EndInit();
-								bImg.Freeze();
-								Dispatcher.Invoke(() => temp.logo = bImg);
-							}
-							else
-							{
-								Dispatcher.Invoke(() => temp.logo = new BitmapImage(new Uri("/Assets/default.png", UriKind.Relative)));
-							}
-						}
-						catch (Exception)
-						{
-						}
-						mods.Add(temp);
-					}
-					catch (Exception)
-					{
-
-					}
-				}
-
-				return mods;
-			});
-		}
-
-		private void Image_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-		{
-			((Image)sender).Source = new BitmapImage(new Uri("/Assets/default.png", UriKind.Relative));
-		}
-
-		private void Menu_OpenSelDir_Click(object sender, RoutedEventArgs e)
-		{
+        private void Menu_OpenSelDir_Click(object sender, RoutedEventArgs e)
+        {
             try
             {
                 Process.Start(MinecraftDir);
@@ -192,56 +194,56 @@ namespace MinecraftModManager
             }
         }
 
-		private void Menu_Settings_Click(object sender, RoutedEventArgs e)
-		{
+        private void Menu_Settings_Click(object sender, RoutedEventArgs e)
+        {
 
-		}
+        }
 
-		private void Txt_SearchMods_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
-		{
+        private void Txt_SearchMods_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
             try
             {
                 Lst_ModList.ItemsSource = LoadedMods.Where(a => a.name.ToLower().Contains(Txt_SearchMods.Text.ToLower()));
             }
             catch (Exception) { };
-		}
+        }
 
-		private void Btn_ClearSeach_Click(object sender, RoutedEventArgs e)
-		{
-			Txt_SearchMods.Text = string.Empty;
-			Lst_ModList.ItemsSource = LoadedMods;
-		}
+        private void Btn_ClearSeach_Click(object sender, RoutedEventArgs e)
+        {
+            Txt_SearchMods.Text = string.Empty;
+            Lst_ModList.ItemsSource = LoadedMods;
+        }
 
-		private void Menu_Close_Click(object sender, RoutedEventArgs e)
-		{
-			Environment.Exit(Environment.ExitCode);
-		}
+        private void Menu_Close_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(Environment.ExitCode);
+        }
 
-		private void Menu_InstallNewMod_Click(object sender, RoutedEventArgs e)
-		{
-			using (OpenFileDialog selectNewModDialog = new OpenFileDialog())
-			{
-				selectNewModDialog.Filter = "Jar Files(*.jar)|*.jar;|Zip Files(*.zip)|*.zip;";
-				selectNewModDialog.Multiselect = false;
-				if (selectNewModDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-				{
-					Windows.InstallModernMod installModernMod = new Windows.InstallModernMod(selectNewModDialog.FileName);
-					installModernMod.ShowDialog();
-				}
-			}
-		}
+        private void Menu_InstallNewMod_Click(object sender, RoutedEventArgs e)
+        {
+            using (OpenFileDialog selectNewModDialog = new OpenFileDialog())
+            {
+                selectNewModDialog.Filter = "Jar Files(*.jar)|*.jar;|Zip Files(*.zip)|*.zip;";
+                selectNewModDialog.Multiselect = false;
+                if (selectNewModDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    Windows.InstallModernMod installModernMod = new Windows.InstallModernMod(selectNewModDialog.FileName);
+                    installModernMod.ShowDialog();
+                }
+            }
+        }
 
-		private void Menu_InstallClassicMod_Click(object sender, RoutedEventArgs e)
-		{
+        private void Menu_InstallClassicMod_Click(object sender, RoutedEventArgs e)
+        {
 
-		}
+        }
 
-		private void Menu_GetForge_Click(object sender, RoutedEventArgs e)
-		{
-			Windows.GetForge getForge = new Windows.GetForge();
-			getForge.ShowDialog();
-		}
-	}
+        private void Menu_GetForge_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.GetForge getForge = new Windows.GetForge();
+            getForge.ShowDialog();
+        }
+    }
 }
 
 
