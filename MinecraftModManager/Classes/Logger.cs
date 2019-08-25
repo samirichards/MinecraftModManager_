@@ -13,15 +13,26 @@ namespace MinecraftModManager.Classes
     {
         bool Disposed = false;
         readonly SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
-        public void AddToLog(string log)
+        public void AddToChanges(string log)
         {
-            File.AppendAllText(Environment.CurrentDirectory + "log.txt", log);
-            File.AppendAllText(Environment.CurrentDirectory + "log.txt", "------------------------" + DateTime.Now.ToString());
+            File.AppendAllText(Environment.CurrentDirectory + "changes.txt", log + Environment.NewLine);
+            File.AppendAllText(Environment.CurrentDirectory + "changes.txt", "------------------------" + DateTime.Now.ToString() + Environment.NewLine);
         }
-        public void AddToLog(string[] log)
+        public void AddToChanges(string[] log)
+        {
+            File.AppendAllLines(Environment.CurrentDirectory + "changes.txt", log);
+            File.AppendAllText(Environment.CurrentDirectory + "changes.txt", "------------------------" + DateTime.Now.ToString() + Environment.NewLine);
+        }
+
+        public void VerboseLog (string log)
+        {
+            File.AppendAllText(Environment.CurrentDirectory + "log.txt", log + Environment.NewLine);
+            File.AppendAllText(Environment.CurrentDirectory + "log.txt", "------------------------" + DateTime.Now.ToString() + Environment.NewLine);
+        }
+        public void VerboseLog(string[] log)
         {
             File.AppendAllLines(Environment.CurrentDirectory + "log.txt", log);
-            File.AppendAllText(Environment.CurrentDirectory + "log.txt", "------------------------" + DateTime.Now.ToString());
+            File.AppendAllText(Environment.CurrentDirectory + "log.txt", "------------------------" + DateTime.Now.ToString() + Environment.NewLine);
         }
 
         public void Dispose()

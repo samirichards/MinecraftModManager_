@@ -196,7 +196,8 @@ namespace MinecraftModManager
 
         private void Menu_Settings_Click(object sender, RoutedEventArgs e)
         {
-
+            Windows.Settings settingsWindow = new Windows.Settings();
+            settingsWindow.ShowDialog();
         }
 
         private void Txt_SearchMods_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)

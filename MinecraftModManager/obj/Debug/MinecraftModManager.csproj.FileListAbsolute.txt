@@ -66,3 +66,5 @@ C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManage
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.csproj.CopyComplete
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.exe
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.pdb
+C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\Windows\Settings.g.cs
+C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\Windows\Settings.baml

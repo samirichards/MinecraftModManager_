@@ -21,7 +21,7 @@ namespace MinecraftModManager.Classes
                 start = temp.IndexOf('[');
             }
             int end = temp.LastIndexOf(']') + 1;
-            return JsonConvert.DeserializeObject<List<Classes.Mod>>(temp.Substring(start, end - start))[0];
+            return JsonConvert.DeserializeObject<List<Mod>>(temp.Substring(start, end - start))[0];
         }
     }
 }
