@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace MinecraftModManager.Classes
 {
-    public class Mod
+    public class Mod :IDisposable
     {
         public string modid { get; set; }
         public string name { get; set; }
@@ -28,5 +28,12 @@ namespace MinecraftModManager.Classes
         public string[] dependencies { get; set; }
         public string[] dependants { get; set; }
         public BitmapImage logo { get; set; }
+
+        public void Dispose() { Dispose(true); GC.SuppressFinalize(this); }
+        protected virtual void Dispose(bool disposing)
+        {
+            GC.Collect(4);
+            this.Dispose();
+        }
     }
 }

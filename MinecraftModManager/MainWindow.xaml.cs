@@ -239,6 +239,18 @@ namespace MinecraftModManager
 
         }
 
+        private void ModListItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount >= 2)
+            {
+                if (Frame_ModContent.Content != null)
+                {
+                    //((Pages.ModContent)Frame_ModContent.Content).Dispose();
+                }
+                Frame_ModContent.Content = new Pages.ModContent(Lst_ModList.SelectedItem as Classes.Mod);
+            }
+        }
+
         private void Menu_GetForge_Click(object sender, RoutedEventArgs e)
         {
             Windows.GetForge getForge = new Windows.GetForge();

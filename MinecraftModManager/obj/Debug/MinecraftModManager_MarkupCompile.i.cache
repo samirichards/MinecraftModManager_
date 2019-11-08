@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\App.xaml
-5-1244590515
+61870663179
 
-14-1801524458
+151378592077
 24-880793471
-MainWindow.xaml;Windows\GetForge.xaml;Windows\InstallClassicMod.xaml;Windows\InstallModernMod.xaml;Windows\Settings.xaml;
+MainWindow.xaml;Pages\ModContent.xaml;Windows\GetForge.xaml;Windows\InstallClassicMod.xaml;Windows\InstallModernMod.xaml;Windows\Settings.xaml;
 
 True
 

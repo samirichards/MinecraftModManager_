@@ -62,9 +62,10 @@ C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManage
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.g.resources
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.Properties.Resources.resources
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.csproj.GenerateResource.cache
-C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.csproj.CoreCompileInputs.cache
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.csproj.CopyComplete
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.exe
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.pdb
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\Windows\Settings.g.cs
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\Windows\Settings.baml
+C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\Pages\ModContent.g.cs
+C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\Pages\ModContent.baml

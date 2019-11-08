@@ -1,17 +1,17 @@
 [
-{
-  "modid": "baubles",
-  "name": "Baubles",
-  "description": "Adding a touch of bling to Minecraft",
-  "version": "1.12-1.5.2",
-  "mcversion": "1.12",
-  "logoFile": "BLogo.png",
-  "url": "http://www.minecraftforum.net/topic/2535073-baubles",
-  "updateUrl": "",
-  "authorList": ["Azanor"],
-  "credits": "Special thanks to chicken_bones",
-  "parent": "",
-  "screenshots": [],
-  "dependencies": []
-}
+	{
+		"modid": "wrcbe",
+		"name": "WirelessRedstone-CBE",
+		"description": "Wireless Redstone ChickenBones Edition",
+		"version": "2.3.1.30",
+		"mcversion": "1.12.2",
+		"url": "http://chickenbones.net/pages/Links.html",
+		"authorList": [
+			"ChickenBones"
+		],
+		"dependencies": [
+			"codechickenlib",
+			"forgemultipartcbe"
+		]
+	}
 ]

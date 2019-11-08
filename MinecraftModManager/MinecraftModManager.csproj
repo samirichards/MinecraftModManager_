@@ -101,6 +101,9 @@
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\Utilities.cs" />
     <Compile Include="Classes\Version.cs" />
+    <Compile Include="Pages\ModContent.xaml.cs">
+      <DependentUpon>ModContent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\GetForge.xaml.cs">
       <DependentUpon>GetForge.xaml</DependentUpon>
     </Compile>
@@ -126,6 +129,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\ModContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\GetForge.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

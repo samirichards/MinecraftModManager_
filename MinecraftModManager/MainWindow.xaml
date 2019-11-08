@@ -92,7 +92,8 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type classes:Mod}">
                         <Grid HorizontalAlignment="Stretch"
-                              Margin="0,4,8,4">
+                              Margin="0,4,8,4"
+                              MouseDown="ModListItem_MouseDown">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"
                                                   MinWidth="80" />
@@ -131,7 +132,9 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <Frame Grid.Column="1"
-                   Background="Gray" />
+                   Background="Gray"
+                   x:Name="Frame_ModContent"
+                   NavigationUIVisibility="Hidden"/>
         </Grid>
     </DockPanel>
 </Window>
