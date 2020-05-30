@@ -134,7 +134,8 @@
             <Frame Grid.Column="1"
                    Background="Gray"
                    x:Name="Frame_ModContent"
-                   NavigationUIVisibility="Hidden"/>
+                   NavigationUIVisibility="Hidden"
+                   Navigating="HandleNavigating"/>
         </Grid>
     </DockPanel>
 </Window>

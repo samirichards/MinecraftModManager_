@@ -127,7 +127,7 @@ namespace MinecraftModManager
                             zipfile.Entries.Where(f => f.Name == "mcmod.info").First().ExtractToFile("temp");
                         }
                         Classes.Mod temp = Classes.Utilities.GetModFromJson(File.ReadAllText("temp"));
-                        foreach (PropertyInfo propertyInfo in temp.GetType().GetProperties().Where(a => a.PropertyType == typeof(string)))
+                        /*foreach (PropertyInfo propertyInfo in temp.GetType().GetProperties().Where(a => a.PropertyType == typeof(string)))
                         {
                             try
                             {
@@ -140,6 +140,7 @@ namespace MinecraftModManager
                             {
                             }
                         }
+                        */
 
                         try
                         {
@@ -255,6 +256,24 @@ namespace MinecraftModManager
         {
             Windows.GetForge getForge = new Windows.GetForge();
             getForge.ShowDialog();
+        }
+
+        void HandleNavigating(Object sender, NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Forward)
+            {
+                e.Cancel = true;
+            }
+
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                e.Cancel = true;
+            }
+
+            if (e.NavigationMode == NavigationMode.Refresh)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

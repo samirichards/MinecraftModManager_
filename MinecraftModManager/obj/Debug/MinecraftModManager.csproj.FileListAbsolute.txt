@@ -69,3 +69,4 @@ C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManage
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\Windows\Settings.baml
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\Pages\ModContent.g.cs
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\Pages\ModContent.baml
+C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.csproj.CoreCompileInputs.cache
