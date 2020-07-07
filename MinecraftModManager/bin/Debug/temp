@@ -1,17 +1,12 @@
 [
 	{
-		"modid": "wrcbe",
-		"name": "WirelessRedstone-CBE",
-		"description": "Wireless Redstone ChickenBones Edition",
-		"version": "2.3.1.30",
+		"modid": "chickenchunks",
+		"name": "ChickenChunks",
+		"description": "Advanced chunkloading management",
+		"version": "2.4.1.73",
 		"mcversion": "1.12.2",
-		"url": "http://chickenbones.net/pages/Links.html",
-		"authorList": [
-			"ChickenBones"
-		],
-		"dependencies": [
-			"codechickenlib",
-			"forgemultipartcbe"
-		]
+		"url": "http://www.minecraftforum.net/topic/909223",
+		"authorList": ["ChickenBones"],
+		"dependencies": ["codechickenlib"]
 	}
 ]

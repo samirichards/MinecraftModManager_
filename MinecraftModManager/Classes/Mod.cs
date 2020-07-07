@@ -28,6 +28,7 @@ namespace MinecraftModManager.Classes
         public string[] dependencies { get; set; }
         public string[] dependants { get; set; }
         public BitmapImage logo { get; set; }
+        public bool updateAvailable { get; set; }
 
         public void Dispose() { Dispose(true); GC.SuppressFinalize(this); }
         protected virtual void Dispose(bool disposing)

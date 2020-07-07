@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ValueConverters</name>
+    </assembly>
+    <members>
+        <member name="T:ValueConverters.BoolToValueConverterBase`2">
+            <summary>
+            Source:
+            http://geekswithblogs.net/codingbloke/archive/2010/05/28/a-generic-boolean-value-converter.aspx
+            </summary>
+            <typeparam name="T">Generic type T which is used as TrueValue or FalseValue.</typeparam>
+            <typeparam name="TConverter">Converter type</typeparam>
+        </member>
+        <member name="T:ValueConverters.StringCaseConverter">
+            <summary>
+            Changes capitalization of a string.
+            </summary>
+            <example>
+            Convert a string to lower case:
+            Text="{Binding Text, Converter={StaticResource StringCaseConverter}, ConverterParameter=L}}"
+            
+            Convert a string to upper case:
+            Text="{Binding Text, Converter={StaticResource StringCaseConverter}, ConverterParameter=U}}"
+            </example>
+        </member>
+        <member name="P:ValueConverters.DateTimeConverter.Format">
+            <summary>
+                The datetime format property.
+                Check MSDN for information about predefined datetime formats:
+                http://msdn.microsoft.com/en-us/library/362btx8f(v=vs.90).aspx.
+            </summary>
+        </member>
+        <member name="T:ValueConverters.EnumToBoolConverter">
+            <summary>
+            EnumToBoolConverter can be used to bind to RadioButtons.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:ValueConverters.EnumToObjectConverter" -->
+        <member name="M:ValueConverters.EnumWrapper.CreateWrappers``1">
+            <summary>
+                Creates a list of wrapped values of an enumeration.
+            </summary>
+            <typeparam name="TEnumType">Type of the enumeration.</typeparam>
+            <returns>The wrapped enumeration values.</returns>
+        </member>
+        <member name="M:ValueConverters.EnumWrapper.CreateWrapper``1(``0,ValueConverters.EnumWrapperConverterNameStyle)">
+            <summary>
+                Create the wrapped value of an enumeration value.
+            </summary>
+            <typeparam name="TEnumType">Type of the enumeration.</typeparam>
+            <param name="value">The value.</param>
+            <param name="nameStyle">The name (short or long) to be considered from the attribute</param>
+            <returns>The wrapped value.</returns>
+        </member>
+        <member name="M:ValueConverters.EnumWrapper.CreateWrapper``1(System.Int32)">
+            <summary>
+                Create the wrapped value of an enumeration value.
+            </summary>
+            <typeparam name="TEnumType">Type of the enumeration.</typeparam>
+            <param name="value">The value.</param>
+            <returns>The wrapped value.</returns>
+        </member>
+        <member name="P:ValueConverters.EnumWrapper`1.LocalizedValue">
+            <summary>
+            Use LocalizedValue to bind UI elements to.
+            To enforce a refresh of LocalizedValue property (e.g. when you change the UI culture at runtime)
+            just call the <code>Refresh</code> method.
+            </summary>
+        </member>
+        <member name="M:ValueConverters.EnumWrapper`1.ToString">
+            <summary>
+                Implicit to string conversion.
+            </summary>
+            <returns>Value converted to a localized string.</returns>
+        </member>
+        <member name="M:ValueConverters.EnumWrapper`1.Equals(System.Object)">
+            <summary>
+                Checks if some objects are equal.
+            </summary>
+            <param name="obj">The object.</param>
+            <returns>True or false.</returns>
+        </member>
+        <member name="M:ValueConverters.EnumWrapper`1.Equals(ValueConverters.EnumWrapper{`0})">
+            <summary>
+                Checks if some objects are equal.
+            </summary>
+            <param name="other">The other.</param>
+            <returns>True or false.</returns>
+        </member>
+        <member name="M:ValueConverters.EnumWrapper`1.op_Implicit(ValueConverters.EnumWrapper{`0})~`0">
+            <summary>
+                Implicit back conversion to the enumeration.
+            </summary>
+            <param name="enumToConvert">The enumeration to convert.</param>
+            <returns>The converted value.</returns>
+        </member>
+        <member name="M:ValueConverters.EnumWrapper`1.op_Implicit(ValueConverters.EnumWrapper{`0})~System.Int32">
+            <summary>
+                Implicit back conversion to the enumeration.
+            </summary>
+            <param name="enumToConvert">The enumeration to convert.</param>
+            <returns>The converted value.</returns>
+        </member>
+        <member name="M:ValueConverters.EnumWrapper`1.op_Equality(ValueConverters.EnumWrapper{`0},ValueConverters.EnumWrapper{`0})">
+            <summary>
+                Equality comparator.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True or false.</returns>
+        </member>
+        <member name="M:ValueConverters.EnumWrapper`1.op_Inequality(ValueConverters.EnumWrapper{`0},ValueConverters.EnumWrapper{`0})">
+            <summary>
+                Not equal comparator.
+            </summary>
+            <param name="left">The left operand.</param>
+            <param name="right">The right operand.</param>
+            <returns>True or false.</returns>
+        </member>
+        <member name="M:ValueConverters.EnumWrapper`1.GetHashCode">
+            <summary>
+                The hash code of the object.
+            </summary>
+            <returns>The hash code.</returns>
+        </member>
+        <member name="T:ValueConverters.EnumWrapperCollection`1">
+            <summary>
+            EnumWrapperCollection is an observable collection for enums wrapped in <see cref="T:ValueConverters.EnumWrapper`1"/> type.
+            </summary>
+            <typeparam name="TEnumType">Enum type which shall be wrapped.</typeparam>
+        </member>
+        <member name="M:ValueConverters.EnumWrapperCollection`1.#ctor">
+            <summary>
+            Creates an instance of the <see cref="T:ValueConverters.EnumWrapperCollection`1"/> class
+            which initializes a collection of <see cref="T:ValueConverters.EnumWrapper`1"/>.
+            </summary>
+        </member>
+        <member name="M:ValueConverters.EnumWrapperCollection`1.#ctor(System.Collections.Generic.IEnumerable{ValueConverters.EnumWrapper{`0}})">
+            <summary>
+            Creates an instance of the <see cref="T:ValueConverters.EnumWrapperCollection`1"/> class.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:ValueConverters.StringToObjectConverter" -->
+        <member name="T:ValueConverters.VersionToStringConverter">
+            <summary>
+            Converts System.Version objects to string. Parameter can be used to limit the number of Version components to return.
+            [1] Major Version
+            [2] Minor Version 
+            [3] Build Number
+            [4] Revision
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MinecraftModManager"
         xmlns:classes="clr-namespace:MinecraftModManager.Classes"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        xmlns:valueConverters="clr-namespace:ValueConverters;assembly=ValueConverters"
+        gif:ImageBehavior.AnimateInDesignMode="True"
         mc:Ignorable="d"
         Title="MainWindow">
+
+    <Window.Resources>
+        <valueConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Window.Resources>
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -57,24 +64,28 @@
                              IsEnabled="False"
                              Visibility="Hidden" />
                 <Label Grid.Row="0"
-                       VerticalAlignment="Top"
+                       VerticalAlignment="Center"
                        x:Name="Lbl_InstalledMods"
                        HorizontalAlignment="Left"
                        Content="Installed Mods" />
+                <CheckBox HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Content="Updatable Only"
+                          x:Name="Chk_Updatable"
+                          Margin="24,0,0,0" Checked="Chk_Updatable_Checked" Unchecked="Chk_Updatable_Checked"/>
                 <Button Grid.Row="0"
                         x:Name="Btn_ManualRefresh"
                         Click="Btn_ManualRefresh_Click"
-                        VerticalAlignment="Top"
+                        VerticalAlignment="Center"
                         HorizontalAlignment="Right"
                         Padding="4,0,4,0"
                         Content="Refresh"
-                        Margin="0,4,8,2" />
+                        Margin="0,0,8,0" />
                 <Grid Grid.Row="1"
                       Margin="8">
                     <TextBox VerticalContentAlignment="Center"
                              x:Name="Txt_SearchMods"
                              KeyUp="Txt_SearchMods_KeyUp"
-                             Text="Search"
                              Margin="0,0,24,0"/>
                     <Button Padding="6,4"
                             x:Name="Btn_ClearSeach"
@@ -126,6 +137,17 @@
                                            TextWrapping="WrapWithOverflow"
                                            FontWeight="Light"
                                            Opacity="0.52" />
+                                <Image Width="16"
+                                       Height="16"
+                                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Top"
+                                       gif:ImageBehavior.AnimatedSource="/Assets/update.gif"
+                                       gif:ImageBehavior.RepeatBehavior="Forever"
+                                       gif:ImageBehavior.AutoStart="True"
+                                       Name="Img_UpdateIcon"
+                                       Visibility="{Binding updateAvailable, Converter={StaticResource BoolToVisibilityConverter}}"
+                                       />
                             </Grid>
                         </Grid>
                     </DataTemplate>

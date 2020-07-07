@@ -20,6 +20,9 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Diagnostics;
 using Application = System.Windows.Application;
+using System.Net;
+using System.Data.Entity;
+using MinecraftModManager.Classes;
 
 namespace MinecraftModManager
 {
@@ -87,6 +90,8 @@ namespace MinecraftModManager
                         Task<List<Classes.Mod>> mods = GetModListAsync(minecraftModsDir);
                         List<Classes.Mod> results = await mods;
 
+                        GetModUpdates(ref results);
+
                         LoadedMods = results;
                         Lst_ModList.ItemsSource = LoadedMods;
                         Lst_ModList.DataContext = LoadedMods;
@@ -98,6 +103,7 @@ namespace MinecraftModManager
                         System.Windows.MessageBox.Show("There was a problem loading mods from the directory: " + _minecraftDir + Environment.NewLine + "Exception Details: " + Environment.NewLine + a.Message);
                     }
                 }
+                UpdateModView();
                 Btn_ManualRefresh.IsEnabled = true;
                 Prog_ProgBar.IsEnabled = false;
                 Prog_ProgBar.Visibility = Visibility.Hidden;
@@ -106,6 +112,21 @@ namespace MinecraftModManager
             else
             {
                 System.Windows.Forms.MessageBox.Show("Could not find Minecraft in the directory '" + MinecraftDir + "'");
+            }
+        }
+
+        public void GetModUpdates(ref List<Classes.Mod> modList)
+        {
+            foreach (Classes.Mod mod in modList)
+            {
+                if (mod.updateJson != null)
+                {
+                    mod.updateAvailable = true;
+                }
+                else
+                {
+                    mod.updateAvailable = false;
+                }
             }
         }
 
@@ -144,7 +165,7 @@ namespace MinecraftModManager
 
                         try
                         {
-                            if (temp.logoFile != null)
+                            if (temp.logoFile != null || temp.logoFile.ToString().Length > 0)
                             {
                                 System.Drawing.Image image = null;
                                 using (var zipfile = ZipFile.Open(item, ZipArchiveMode.Read))
@@ -201,19 +222,44 @@ namespace MinecraftModManager
             settingsWindow.ShowDialog();
         }
 
-        private void Txt_SearchMods_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+
+        private void UpdateModView()
         {
+            Lst_ModList.ItemsSource = LoadedMods;
             try
             {
-                Lst_ModList.ItemsSource = LoadedMods.Where(a => a.name.ToLower().Contains(Txt_SearchMods.Text.ToLower()));
+                if (Txt_SearchMods.Text.Length > 0)
+                {
+                    if ((bool)Chk_Updatable.IsChecked)
+                    {
+                        Lst_ModList.ItemsSource = LoadedMods.Where(a => a.name.ToLower().Contains(Txt_SearchMods.Text.ToLower()) && a.updateAvailable == true);
+                    }
+                    else
+                    {
+                        Lst_ModList.ItemsSource = LoadedMods.Where(a => a.name.ToLower().Contains(Txt_SearchMods.Text.ToLower()));
+                    }
+                }
+                else
+                {
+                    if ((bool)Chk_Updatable.IsChecked)
+                    {
+                        Lst_ModList.ItemsSource = LoadedMods.Where(a => a.updateAvailable == true);
+                    }
+                }
             }
-            catch (Exception) { };
+            catch (Exception) {   }
+        }
+
+        private void Txt_SearchMods_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            UpdateModView();
         }
 
         private void Btn_ClearSeach_Click(object sender, RoutedEventArgs e)
         {
             Txt_SearchMods.Text = string.Empty;
             Lst_ModList.ItemsSource = LoadedMods;
+            UpdateModView();
         }
 
         private void Menu_Close_Click(object sender, RoutedEventArgs e)
@@ -237,7 +283,7 @@ namespace MinecraftModManager
 
         private void Menu_InstallClassicMod_Click(object sender, RoutedEventArgs e)
         {
-
+            System.Windows.Forms.MessageBox.Show("Will be added later");
         }
 
         private void ModListItem_MouseDown(object sender, MouseButtonEventArgs e)
@@ -274,6 +320,11 @@ namespace MinecraftModManager
             {
                 e.Cancel = true;
             }
+        }
+
+        private void Chk_Updatable_Checked(object sender, RoutedEventArgs e)
+        {
+            UpdateModView();
         }
     }
 }
