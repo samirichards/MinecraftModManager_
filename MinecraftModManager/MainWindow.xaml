@@ -49,7 +49,7 @@
         <Grid DockPanel.Dock="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"
-                                  MinWidth="300" />
+                                  MinWidth="350" />
                 <ColumnDefinition Width="4*" />
             </Grid.ColumnDefinitions>
             <Grid Grid.Row="0"
@@ -137,8 +137,8 @@
                                            TextWrapping="WrapWithOverflow"
                                            FontWeight="Light"
                                            Opacity="0.52" />
-                                <Image Width="16"
-                                       Height="16"
+                                <Image Width="24"
+                                       Height="24"
                                        RenderOptions.BitmapScalingMode="NearestNeighbor"
                                        HorizontalAlignment="Right"
                                        VerticalAlignment="Top"
@@ -147,6 +147,9 @@
                                        gif:ImageBehavior.AutoStart="True"
                                        Name="Img_UpdateIcon"
                                        Visibility="{Binding updateAvailable, Converter={StaticResource BoolToVisibilityConverter}}"
+                                       ToolTip="{Binding ToolTipMessage}"
+                                       ToolTipService.ShowDuration="2147483647"
+                                       ToolTipService.InitialShowDelay="100"
                                        />
                             </Grid>
                         </Grid>

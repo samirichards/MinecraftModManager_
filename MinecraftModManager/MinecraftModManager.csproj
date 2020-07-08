@@ -109,7 +109,6 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\Utilities.cs" />
-    <Compile Include="Classes\Version.cs" />
     <Compile Include="Pages\ModContent.xaml.cs">
       <DependentUpon>ModContent.xaml</DependentUpon>
     </Compile>

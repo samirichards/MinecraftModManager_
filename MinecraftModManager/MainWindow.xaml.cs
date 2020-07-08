@@ -79,6 +79,8 @@ namespace MinecraftModManager
             if (Directory.Exists(MinecraftDir))
             {
                 Btn_ManualRefresh.IsEnabled = false;
+                Chk_Updatable.IsChecked = false;
+                Chk_Updatable.IsEnabled = false;
                 Lbl_InstalledMods.Content = "Fetching Mods...";
                 Prog_ProgBar.IsEnabled = true;
                 Prog_ProgBar.Visibility = Visibility.Visible;
@@ -89,8 +91,6 @@ namespace MinecraftModManager
 
                         Task<List<Classes.Mod>> mods = GetModListAsync(minecraftModsDir);
                         List<Classes.Mod> results = await mods;
-
-                        GetModUpdates(ref results);
 
                         LoadedMods = results;
                         Lst_ModList.ItemsSource = LoadedMods;
@@ -105,9 +105,11 @@ namespace MinecraftModManager
                 }
                 UpdateModView();
                 Btn_ManualRefresh.IsEnabled = true;
+                Chk_Updatable.IsEnabled = true;
                 Prog_ProgBar.IsEnabled = false;
                 Prog_ProgBar.Visibility = Visibility.Hidden;
                 GC.Collect(4);
+                _ = GetModUpdatesAsync();
             }
             else
             {
@@ -115,18 +117,11 @@ namespace MinecraftModManager
             }
         }
 
-        public void GetModUpdates(ref List<Classes.Mod> modList)
+        public async Task GetModUpdatesAsync()
         {
-            foreach (Classes.Mod mod in modList)
+            foreach (Mod mod in LoadedMods)
             {
-                if (mod.updateJson != null)
-                {
-                    mod.updateAvailable = true;
-                }
-                else
-                {
-                    mod.updateAvailable = false;
-                }
+                await mod.CheckForUpdate();
             }
         }
 
@@ -147,25 +142,14 @@ namespace MinecraftModManager
                         {
                             zipfile.Entries.Where(f => f.Name == "mcmod.info").First().ExtractToFile("temp");
                         }
-                        Classes.Mod temp = Classes.Utilities.GetModFromJson(File.ReadAllText("temp"));
-                        /*foreach (PropertyInfo propertyInfo in temp.GetType().GetProperties().Where(a => a.PropertyType == typeof(string)))
-                        {
-                            try
-                            {
-                                if (propertyInfo.GetValue(temp).ToString() == string.Empty)
-                                {
-                                    propertyInfo.SetValue(temp, null);
-                                }
-                            }
-                            catch (Exception)
-                            {
-                            }
-                        }
-                        */
-
+                        Mod temp = Utilities.GetModFromJson(File.ReadAllText("temp"));
                         try
                         {
-                            if (temp.logoFile != null || temp.logoFile.ToString().Length > 0)
+                            if (temp.logoFile == null || temp.logoFile == "" || temp.logoFile.Contains("examplemod"))
+                            {
+                                Dispatcher.Invoke(() => temp.logo = new BitmapImage(new Uri("/Assets/default.png", UriKind.Relative)));
+                            }
+                            else
                             {
                                 System.Drawing.Image image = null;
                                 using (var zipfile = ZipFile.Open(item, ZipArchiveMode.Read))
@@ -180,10 +164,6 @@ namespace MinecraftModManager
                                 bImg.EndInit();
                                 bImg.Freeze();
                                 Dispatcher.Invoke(() => temp.logo = bImg);
-                            }
-                            else
-                            {
-                                Dispatcher.Invoke(() => temp.logo = new BitmapImage(new Uri("/Assets/default.png", UriKind.Relative)));
                             }
                         }
                         catch (Exception)
@@ -290,10 +270,12 @@ namespace MinecraftModManager
         {
             if (e.ClickCount >= 2)
             {
+                /*
                 if (Frame_ModContent.Content != null)
                 {
-                    //((Pages.ModContent)Frame_ModContent.Content).Dispose();
+                    
                 }
+                */
                 Frame_ModContent.Content = new Pages.ModContent(Lst_ModList.SelectedItem as Classes.Mod);
             }
         }
@@ -328,23 +310,3 @@ namespace MinecraftModManager
         }
     }
 }
-
-
-
-/*
-Unimplemented Mod logo functionality
-try
-{
-    System.Drawing.Image image = System.Drawing.Image.FromStream(ZipFile.Open(item, ZipArchiveMode.Read).Entries.Where(f => f.Name.Contains(".png")).First().Open());
-    MemoryStream ms = new MemoryStream();
-    image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-    BitmapImage bImg = new BitmapImage();
-    bImg.BeginInit();
-    bImg.StreamSource = new MemoryStream(ms.ToArray());
-    bImg.EndInit();
-    temp.logo.Source = bImg;
-}
-catch (Exception)
-{
-}
-*/

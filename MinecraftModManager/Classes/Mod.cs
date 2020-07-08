@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 namespace MinecraftModManager.Classes
 {
@@ -29,12 +32,48 @@ namespace MinecraftModManager.Classes
         public string[] dependants { get; set; }
         public BitmapImage logo { get; set; }
         public bool updateAvailable { get; set; }
+        public string ToolTipMessage { get; set; }
 
         public void Dispose() { Dispose(true); GC.SuppressFinalize(this); }
         protected virtual void Dispose(bool disposing)
         {
             GC.Collect(4);
             this.Dispose();
+        }
+
+        public async Task CheckForUpdate()
+        {
+            try
+            {
+                if (updateJson != null)
+                {
+                    HttpClient client = new HttpClient();
+                    HttpResponseMessage responseMessage = await client.GetAsync(updateJson);
+                    responseMessage.EnsureSuccessStatusCode();
+                    string responseBody = await responseMessage.Content.ReadAsStringAsync();
+                    JObject response = JObject.Parse(responseBody);
+
+                    if (Utilities.IsVersionLater(response["promos"][mcversion + "-latest"].ToString(), version))
+                    {
+                        updateAvailable = true;
+                        //MessageBox.Show("An update is availaible for " + name + " on " + mcversion + Environment.NewLine + name + " version " + response["promos"][mcversion + "-latest"].ToString());
+                        ToolTipMessage = "Installed version: " + version + Environment.NewLine + "New version: " + response["promos"][mcversion + "-latest"].ToString();
+                    }
+                    else
+                    {
+                        updateAvailable = false;
+                    }
+                }
+                else
+                {
+                    updateAvailable = false;
+                }
+            }
+            catch (Exception e)
+            {
+                updateAvailable = false;
+                MessageBox.Show("Error getting " + name + " update status\n" + e.InnerException.Message);
+            }
         }
     }
 }
