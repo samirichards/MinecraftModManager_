@@ -54,7 +54,6 @@ C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManage
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\bin\Debug\ValueConverters.Annotations.pdb
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\bin\Debug\WpfAnimatedGif.pdb
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\bin\Debug\WpfAnimatedGif.xml
-C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.csprojAssemblyReference.cache
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MainWindow.g.cs
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\Pages\ModContent.g.cs
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\Windows\GetForge.g.cs
@@ -78,3 +77,5 @@ C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManage
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.csproj.CopyComplete
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.exe
 C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.pdb
+C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.csproj.AssemblyReference.cache
+C:\Users\samir\Source\Repos\samirichards\MinecraftModManager_\MinecraftModManager\obj\Debug\MinecraftModManager.csproj.SuggestedBindingRedirects.cache
